@@ -1,0 +1,38 @@
+;; Loop 10,000,000
+;; Generate random number representing winning door, 0, 1, or 2
+;; Generate random number representing chosen door, 0, 1, or 2
+;; Remove first door that they didn't pick that isn't the winning door
+;; Don't switch. Check if the two are equal. Increment win result.
+;; Switch. Check if the two are equal. Increment win result.
+;; Divide each result by 10,000,000
+
+(dotimes (count 10000000)
+  (let* ((winning-door (random 3))
+	 (chosen-door (random 3))
+	 (removed-door (remove-if #'(lambda (x)
+				      (or (eql x winning-door)
+					  (eql x chosen-door))
+				      '(0 1 2)))))
+    
+    (prin1 chosen-door)
+    (prin1 winning-door)
+    (prin1 removed-door)))
+
+
+(dotimes (count 5)
+  (let* ((winning-door (random 3))
+	 (removed-door (remove-if #'(lambda (x) (eql x winning-door)) '(0 1 2))))
+    (prin1 removed-door)))
+
+(dotimes (count 1)
+  (let* ((winning-door (random 3))
+	 (chosen-door (random 3))
+	 (removed-door (cond
+			 ((or (not (eql 0 winning-door))
+			      (not (eql 0 chosen-door))) 0)
+			 ((or (not (eql 1 winning-door))
+			      (not (eql 1 chosen-door))) 0)
+			 (t 2))))
+    (prin1 chosen-door)
+    (prin1 winning-door)
+    (prin1 removed-door)))
